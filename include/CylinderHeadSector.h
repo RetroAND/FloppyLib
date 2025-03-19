@@ -2,8 +2,6 @@
 
 #include <string>
 
-using namespace std;
-
 class CylinderHeadSector
 {
 	private:
@@ -12,7 +10,7 @@ class CylinderHeadSector
 		char sector;
 	public:
 		CylinderHeadSector(char cylinder = 0, char header = 0, char sector = 0);
-		CylinderHeadSector(string chs);
+		CylinderHeadSector(std::string chs);
 		char GetCylinder();
 		char GetHead();
 		char GetSector();

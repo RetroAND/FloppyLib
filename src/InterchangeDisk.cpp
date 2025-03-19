@@ -1,6 +1,8 @@
 #include "InterchangeDisk.h"
 #include <iostream>
 
+using namespace std;
+
 InterchangeDisk::InterchangeDisk(Disk disk)
 {
 	this->disk = disk;

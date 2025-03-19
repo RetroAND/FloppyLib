@@ -1,5 +1,7 @@
 #include "CylinderHeadSector.h"
 
+using namespace std;
+
 CylinderHeadSector::CylinderHeadSector(char cylinder, char head, char sector)
 {
 	this->cylinder = cylinder;

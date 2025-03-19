@@ -1,5 +1,7 @@
 #include "InterchangeVolume.h"
 
+using namespace std;
+
 InterchangeVolume::InterchangeVolume(string identifier, char accessibility, string machine, string owner, char surfaceIndicator, bool extentArrangementConstraint, bool nonSequentialRecording, short sectorSize, string sectorSequenceCode, char labelStandard)
 {
 	this->identifier = identifier;

@@ -11,7 +11,7 @@ class InterchangeDisk
 	private:
 		Disk disk;
 		InterchangeVolume volume;
-		vector<InterchangeFile> files;
+		std::vector<InterchangeFile> files;
 		void InitializeEcmaVolume();
 		void InitializeIbmVolume();
 		void InitializeEcmaFiles();
@@ -21,5 +21,5 @@ class InterchangeDisk
 		Disk& GetDisk();
 		InterchangeDisk(Disk disk = Disk());
 		InterchangeVolume& GetVolume();
-		vector<InterchangeFile>& GetFiles();
+		std::vector<InterchangeFile>& GetFiles();
 };

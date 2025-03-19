@@ -195,3 +195,30 @@ Sector Disk::GetSector(CylinderHeadSector location)
 	printf("Sector not found\n");
 	throw exception("Error: Sector not found\n");
 }
+
+vector<Track> Disk::GetTracksByHead(char head)
+{
+	vector<Track> tracks = vector<Track>();
+	for (int currentTrack = 0; currentTrack < this->tracks.size(); currentTrack++)
+	{
+		if (this->tracks[currentTrack].GetHeader() == head)
+		{
+			tracks.push_back(this->tracks[currentTrack]);
+		}
+	}
+	return tracks;
+}
+
+char Disk::GetHeads()
+{
+	char heads = 1;
+	for (int track = 0; track < this->tracks.size(); track++)
+	{
+		char trackHead = this->tracks[track].GetHeader();
+		if (trackHead > heads)
+		{
+			heads = trackHead + 1;
+		}
+	}
+	return heads;
+}

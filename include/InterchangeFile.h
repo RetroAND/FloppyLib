@@ -4,12 +4,10 @@
 #include <string>
 #include "Sector.h"
 
-using namespace std;
-
 class InterchangeFile
 {
 	private:
-		string fileIdentifier;
+		std::string fileIdentifier;
 		short blockLength;
 		char recordAttribute;
 		CylinderHeadSector beginningOfExtent;
@@ -21,18 +19,18 @@ class InterchangeFile
 		bool writeProtect;
 		char exchangeTypeIndicator;
 		char multiVolumeIndicator;
-		string volumeSequence;
-		string creationDate;
+		std::string volumeSequence;
+		std::string creationDate;
 		int recordLength;
-		string offsetToNextRecordSpace;
-		string expirationDate;
+		std::string offsetToNextRecordSpace;
+		std::string expirationDate;
 		char verifyCopyIndicator;
 		char datasetOrganization;
 		CylinderHeadSector endOfData;
-		vector<Sector> sectors;
+		std::vector<Sector> sectors;
 	public:
-		InterchangeFile(string fileIdentifier, short blockLength, char recordAttribute, CylinderHeadSector beginningOfExtent, char physicalRecordLength, CylinderHeadSector endOfExtent, bool fixedLengthRecord, bool bypassIndicator, char datasetSecurity, bool writeProtect, char exchangeTypeIndicator, char multiVolumeIndicator, string volumeSequence, string creationDate, int recordLength, string offsetToNextRecordSpace, string expirationDate, char verifyCopyIndicator, char datasetOrganization, CylinderHeadSector endOfData);
-		string GetFileIdentifier();
+		InterchangeFile(std::string fileIdentifier, short blockLength, char recordAttribute, CylinderHeadSector beginningOfExtent, char physicalRecordLength, CylinderHeadSector endOfExtent, bool fixedLengthRecord, bool bypassIndicator, char datasetSecurity, bool writeProtect, char exchangeTypeIndicator, char multiVolumeIndicator, std::string volumeSequence, std::string creationDate, int recordLength, std::string offsetToNextRecordSpace, std::string expirationDate, char verifyCopyIndicator, char datasetOrganization, CylinderHeadSector endOfData);
+		std::string GetFileIdentifier();
 		short GetBlockLength();
 		char GetRecordAttribute();
 		CylinderHeadSector GetBeginningOfExtent();
@@ -44,14 +42,14 @@ class InterchangeFile
 		bool IsWriteProtected();
 		char GetExchangeTypeIndicator();
 		char GetMultiVolumeIndicator();
-		string GetVolumeSequence();
-		string GetCreationDate();
+		std::string GetVolumeSequence();
+		std::string GetCreationDate();
 		int GetRecordLength();
-		string GetOffsetToNextRecordSpace();
-		string GetExpirationDate();
+		std::string GetOffsetToNextRecordSpace();
+		std::string GetExpirationDate();
 		char GetVerifyCopyIndicator();
 		char GetDatasetOrganization();
 		CylinderHeadSector GetEndOfData();
-		vector<Sector>& GetSectors();
-		void SaveToFile(string path);
+		std::vector<Sector>& GetSectors();
+		void SaveToFile(std::string path);
 };
