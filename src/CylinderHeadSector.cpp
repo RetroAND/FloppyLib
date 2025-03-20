@@ -1,4 +1,5 @@
 #include "CylinderHeadSector.h"
+#include <iostream>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ CylinderHeadSector::CylinderHeadSector(string chs)
 	string cylinder = chs.substr(0, 2);
 	string head = chs.substr(2, 1);
 	string sector = chs.substr(3, 2);
+	cout << "CHS: "+chs << endl;
 	this->cylinder = stoi(cylinder);
 	this->head = stoi(head);
 	this->sector = stoi(sector) - 1;

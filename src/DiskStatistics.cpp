@@ -1,6 +1,6 @@
 #include "DiskStatistics.h"
 
-DiskStatistics::DiskStatistics(char tracks, char heads, short sectors, short errors)
+DiskStatistics::DiskStatistics(unsigned char tracks, unsigned char heads, unsigned short sectors, unsigned short errors)
 {
 	this->tracks = tracks;
 	this->heads = heads;
@@ -8,22 +8,22 @@ DiskStatistics::DiskStatistics(char tracks, char heads, short sectors, short err
 	this->errors = errors;
 }
 
-char DiskStatistics::GetTracks()
+unsigned char DiskStatistics::GetTracks()
 {
 	return this->tracks;
 }
 
-char DiskStatistics::GetHeads()
+unsigned char DiskStatistics::GetHeads()
 {
 	return this->heads;
 }
 
-short DiskStatistics::GetSectors()
+unsigned short DiskStatistics::GetSectors()
 {
 	return this->sectors;
 }
 
-short DiskStatistics::GetErrors()
+unsigned short DiskStatistics::GetErrors()
 {
 	return this->errors;
 }

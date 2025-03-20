@@ -32,10 +32,11 @@ short GetSectorSizeFromVolumeChar(char sectorSize)
 {
 	switch (sectorSize)
 	{
+		case '0': return 128;
 		case '1': return 256;
 		case '2': return 512;
 		case '3': return 1024;
-		default: return 128;
+		default: throw exception("ERROR: Unknown Sector Size");
 	}
 }
 
@@ -85,7 +86,12 @@ void InterchangeDisk::InitializeIbmFiles()
 		if (directorySector.GetEbcdicString(0,3) == "HDR")
 		{
 			string fileIdentifier = directorySector.GetEbcdicString(5,17);
-			short blockLength = stoi(directorySector.GetEbcdicString(22, 5));		
+			string bl = directorySector.GetEbcdicString(22, 5);
+			short blockLength = 256;
+			if (bl != "     ")
+			{
+				blockLength = stoi(bl);
+			}
 			char recordAttribute = directorySector.GetEbcdicChar(27);		
 			CylinderHeadSector beginningOfExtent = CylinderHeadSector(directorySector.GetEbcdicString(28, 5));		
 			char physicalRecordLength = directorySector.GetEbcdicChar(33);		
@@ -97,8 +103,13 @@ void InterchangeDisk::InitializeIbmFiles()
 			char exchangeTypeIndicator = directorySector.GetEbcdicChar(43);		
 			char multiVolumeIndicator = directorySector.GetEbcdicChar(44);		
 			string volumeSequence = directorySector.GetEbcdicString(45, 2);		
-			string creationDate = directorySector.GetEbcdicString(47, 6);		
-			int recordLength = stoi(directorySector.GetEbcdicString(53, 4));		
+			string creationDate = directorySector.GetEbcdicString(47, 6);
+			string rl = directorySector.GetEbcdicString(53, 4);
+			int recordLength = blockLength;
+			if (rl != "    ")
+			{
+				recordLength = stoi(directorySector.GetEbcdicString(53, 4));
+			}
 			string offsetToNextRecordSpace = directorySector.GetEbcdicString(57, 5);		
 			string expirationDate = directorySector.GetEbcdicString(66, 6);		
 			char verifyCopyIndicator = directorySector.GetEbcdicChar(72);			

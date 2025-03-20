@@ -38,7 +38,7 @@ Mode ImdParseTrackMode(char modeId)
 		case 3: return new Mode(true, 500);
 		case 4: return new Mode(true, 300);
 		case 5: return new Mode(true, 250);
-		default: return new Mode(false, 500);
+		default: throw exception("ERROR: Unknown track mode");
 	}
 }
 
@@ -58,7 +58,6 @@ int ImdParseTrack(Disk& disk, vector<char> file, int index)
 	bool cylinderSectorMap = file[index + 2] & 0x80;
 	bool headSectorMap = file[index + 2] & 0x40;
 	Track track = Track(mode, cylinder, head, sectorNumber, sectorSize);
-	int offset = index;
 	index += 5;
 	//Parse track end
 	//Parse sectors start
@@ -68,14 +67,13 @@ int ImdParseTrack(Disk& disk, vector<char> file, int index)
 		sectorMap.push_back(file[index + sector] - 1);
 	}
 	index += sectorNumber;
-	int offsett = sectorSize + 5;
 	if (cylinderSectorMap)
 	{
-		index += sectorSize;
+		index += sectorNumber;
 	}
 	if (headSectorMap)
 	{
-		index += sectorSize;
+		index += sectorNumber;
 	}
 	for (int sector = 0; sector < sectorNumber; sector++)
 	{
@@ -84,7 +82,7 @@ int ImdParseTrack(Disk& disk, vector<char> file, int index)
 	}
 	sort(track.GetSectors().begin(), track.GetSectors().end(), CompareCHS);
 	disk.GetTracks().push_back(track);
-	return index - offset;
+	return index;
 }
 
 vector<char> CopySectorAtIndex(vector<char> file, int index, short sectorSize)

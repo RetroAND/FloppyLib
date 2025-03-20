@@ -46,6 +46,7 @@ target_include_directories(
 )
 
 #add_executable(tester src/FloppyLib.cpp)
+#target_link_libraries(tester FloppyLib)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET FloppyLib PROPERTY CXX_STANDARD 20)

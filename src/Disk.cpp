@@ -65,7 +65,7 @@ int Disk::LoadFromImd(string path)
 	}
 	while (index < fileSize)
 	{
-		index += ImdParseTrack(*this, rawFile, index);
+		index = ImdParseTrack(*this, rawFile, index);
 	}
 	// IMD Processing end
 	return 0;
@@ -77,7 +77,7 @@ void Disk::Identify()
 	{
 		return;	// Disk is already identified, don't identify it
 	}
-	Track track0 = this->tracks[0];
+	Track track0 = this->GetTrack(0, 0);
 	if (track0.GetSectorNumber() == 1 && track0.GetSectorSize() == 4096)
 	{
 		this->type = IBM_SYSTEM_34; // System/34 Executable Disk
@@ -147,10 +147,10 @@ string Disk::GetTypeString()
 
 DiskStatistics Disk::GetStatistics()
 {
-	char tracks = this->tracks.size();
-	char heads = 1;
-	short sectors = 0;
-	short errors = 0;
+	unsigned char tracks = this->tracks.size();
+	unsigned char heads = 1;
+	unsigned short sectors = 0;
+	unsigned short errors = 0;
 	for (int currentTrack = 0; currentTrack < tracks; currentTrack++)
 	{
 		Track track = this->tracks[currentTrack];
@@ -215,7 +215,7 @@ char Disk::GetHeads()
 	for (int track = 0; track < this->tracks.size(); track++)
 	{
 		char trackHead = this->tracks[track].GetHeader();
-		if (trackHead > heads)
+		if (trackHead >= heads)
 		{
 			heads = trackHead + 1;
 		}
