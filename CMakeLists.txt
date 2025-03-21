@@ -26,7 +26,8 @@ add_library (FloppyLib  SHARED
 	"src/FloppyLib.cpp"
 	"src/DiskStatistics.cpp"
 	"src/InterchangeDisk.cpp"
- "include/Types.h")
+	"src/DiskSet.cpp"
+	"src/D88Functions.cpp")
 
 set_target_properties(FloppyLib PROPERTIES
 	VERSION ${PROJECT_VERSION}

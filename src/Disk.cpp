@@ -132,9 +132,14 @@ string Disk::GetTypeString()
 		case Type_IBM_Interchange: return "IBM Interchange";
 		case Type_DEC_PDP_RT11: return "DEC PDP-11 RT-11";
 		case Type_IBM_System_32: return "IBM System/32";
+		case Type_IBM_System_32_Interchange: return "IBM System/32 (interchange)";
 		case Type_IBM_System_34: return "IBM System/34";
+		case Type_IBM_System_34_Interchange: return "IBM System/34 (interchange)";
 		case Type_IBM_System_36: return "IBM System/36";
+		case Type_IBM_System_36_Interchange: return "IBM System/36 (interchange)";
 		case Type_ECMA_58_Interchange: return "ECMA-58";
+		case Type_NEC_PC_88: return "PC-88 (.D88)";
+		case Type_NEC_PC_98: return "PC-98";
 		default: return "Reserved";
 	}
 }
@@ -215,4 +220,16 @@ char Disk::GetHeads()
 		}
 	}
 	return heads;
+}
+
+bool Disk::IsIBMInterchangeDisk()
+{
+	switch (this->type)
+	{
+		case Type_IBM_Interchange:
+		case Type_IBM_System_32_Interchange:
+		case Type_IBM_System_34_Interchange:
+		case Type_IBM_System_36_Interchange: return true;
+		default: return false;
+	}
 }

@@ -1,5 +1,6 @@
 #include "InterchangeDisk.h"
 #include <iostream>
+#include "Types.h"
 
 using namespace std;
 
@@ -136,5 +137,26 @@ void InterchangeDisk::GenerateFiles(InterchangeFile& file)
 		Sector sector = this->disk.GetSector(index);
 		file.GetSectors().push_back(sector);
 		index.Increment(this->disk.GetTrack(index.GetCylinder(), index.GetHead()).GetSectorNumber(), this->volume.IsDoubleSided());
+	}
+}
+
+void InterchangeDisk::Identify()
+{
+	if (this->disk.GetType() != Type_IBM_Interchange)
+	{
+		return;
+	}
+	string diskMachine = this->volume.GetMachine();
+	if (diskMachine.find("IBMSYSTEM32") != string::npos)
+	{
+		this->disk = Type_IBM_System_32_Interchange;
+	}
+	else if(diskMachine.find("IBMSYSTEM34") != string::npos)
+	{
+		this->disk = Type_IBM_System_34_Interchange;
+	}
+	else if (diskMachine.find("IBMSYSTEM36") != string::npos)
+	{
+		this->disk = Type_IBM_System_36_Interchange;
 	}
 }

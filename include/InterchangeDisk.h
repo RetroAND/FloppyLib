@@ -20,6 +20,7 @@ class InterchangeDisk
 	public:
 		Disk& GetDisk();
 		InterchangeDisk(Disk disk = Disk());
+		void Identify();
 		InterchangeVolume& GetVolume();
 		std::vector<InterchangeFile>& GetFiles();
 };

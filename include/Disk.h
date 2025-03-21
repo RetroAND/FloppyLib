@@ -10,10 +10,11 @@ class Disk
 	private:
 		char type;
 		std::vector<Track> tracks;
-		bool IsEcmaDisk(std::vector<char> sector);
 		bool IsInterchangeDisk(std::vector<char> sector);
+		bool IsEcmaDisk(std::vector<char> sector);
 	public:
 		Disk(char type = 0);
+		bool IsIBMInterchangeDisk();
 		std::vector<Track>& GetTracks();
 		int LoadFromImd(std::string path);
 		void Identify();
