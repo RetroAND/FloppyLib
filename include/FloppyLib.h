@@ -8,3 +8,4 @@
 #include "InterchangeFile.h"
 #include "InterchangeVolume.h"
 #include "InterchangeDisk.h"
+#include "Types.h"

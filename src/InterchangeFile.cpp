@@ -4,7 +4,7 @@
 
 using namespace std;
 
-InterchangeFile::InterchangeFile(string fileIdentifier = "", short blockLength = 128, char recordAttribute=' ', CylinderHeadSector beginningOfExtent = CylinderHeadSector(1,0,0), char physicalRecordLength = 128, CylinderHeadSector endOfExtent = (75,0,0), bool fixedLengthRecord = false, bool bypassIndicator = false, char datasetSecurity = ' ', bool writeProtect = false, char exchangeTypeIndicator = 'E', char multiVolumeIndicator = ' ', string volumeSequence = "", string creationDate="", int recordLength = 128, string offsetToNextRecordSpace = "", string expirationDate = "999999", char verifyCopyIndicator = ' ', char datasetOrganization = ' ', CylinderHeadSector endOfData = CylinderHeadSector(75,0,0))
+InterchangeFile::InterchangeFile(string fileIdentifier = "", short blockLength = 128, char recordAttribute=' ', CylinderHeadSector beginningOfExtent = CylinderHeadSector(1,0,0), char physicalRecordLength = 128, CylinderHeadSector endOfExtent = (75,0,0), bool fixedLengthRecord = false, bool bypassIndicator = false, char datasetSecurity = ' ', bool writeProtect = false, char exchangeTypeIndicator = 'E', char multiVolumeIndicator = ' ', string volumeSequence = "", string creationDate="", int recordLength = 128, string offsetToNextRecordSpace = "", string expirationDate = "999999", char verifyCopyIndicator = ' ', char datasetOrganization = ' ', CylinderHeadSector endOfData = CylinderHeadSector(75,0,0), std::string creatingSystem = "")
 {
 	this->fileIdentifier = fileIdentifier;
 	this->blockLength = blockLength;
@@ -26,6 +26,7 @@ InterchangeFile::InterchangeFile(string fileIdentifier = "", short blockLength =
 	this->verifyCopyIndicator = verifyCopyIndicator;
 	this->datasetOrganization = datasetOrganization;
 	this->endOfData = endOfData;
+	this->creatingSystem = creatingSystem;
 	this->sectors = vector<Sector>();
 }
 
@@ -127,6 +128,11 @@ char InterchangeFile::GetDatasetOrganization()
 CylinderHeadSector InterchangeFile::GetEndOfData()
 {
 	return this->endOfData;
+}
+
+std::string InterchangeFile::GetCreatingSystem()
+{
+	return this->creatingSystem;
 }
 
 vector<Sector>& InterchangeFile::GetSectors()

@@ -27,9 +27,10 @@ class InterchangeFile
 		char verifyCopyIndicator;
 		char datasetOrganization;
 		CylinderHeadSector endOfData;
+		std::string creatingSystem;
 		std::vector<Sector> sectors;
 	public:
-		InterchangeFile(std::string fileIdentifier, short blockLength, char recordAttribute, CylinderHeadSector beginningOfExtent, char physicalRecordLength, CylinderHeadSector endOfExtent, bool fixedLengthRecord, bool bypassIndicator, char datasetSecurity, bool writeProtect, char exchangeTypeIndicator, char multiVolumeIndicator, std::string volumeSequence, std::string creationDate, int recordLength, std::string offsetToNextRecordSpace, std::string expirationDate, char verifyCopyIndicator, char datasetOrganization, CylinderHeadSector endOfData);
+		InterchangeFile(std::string fileIdentifier, short blockLength, char recordAttribute, CylinderHeadSector beginningOfExtent, char physicalRecordLength, CylinderHeadSector endOfExtent, bool fixedLengthRecord, bool bypassIndicator, char datasetSecurity, bool writeProtect, char exchangeTypeIndicator, char multiVolumeIndicator, std::string volumeSequence, std::string creationDate, int recordLength, std::string offsetToNextRecordSpace, std::string expirationDate, char verifyCopyIndicator, char datasetOrganization, CylinderHeadSector endOfData, std::string creatingSystem);
 		std::string GetFileIdentifier();
 		short GetBlockLength();
 		char GetRecordAttribute();
@@ -50,6 +51,7 @@ class InterchangeFile
 		char GetVerifyCopyIndicator();
 		char GetDatasetOrganization();
 		CylinderHeadSector GetEndOfData();
+		std::string GetCreatingSystem();
 		std::vector<Sector>& GetSectors();
 		void SaveToFile(std::string path);
 };

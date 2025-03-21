@@ -32,7 +32,7 @@ short GetSectorSizeFromVolumeChar(char sectorSize)
 {
 	switch (sectorSize)
 	{
-		case '0': return 128;
+		case ' ': return 128;
 		case '1': return 256;
 		case '2': return 512;
 		case '3': return 1024;
@@ -113,9 +113,10 @@ void InterchangeDisk::InitializeIbmFiles()
 			string offsetToNextRecordSpace = directorySector.GetEbcdicString(57, 5);		
 			string expirationDate = directorySector.GetEbcdicString(66, 6);		
 			char verifyCopyIndicator = directorySector.GetEbcdicChar(72);			
-			char datasetOrganization = directorySector.GetEbcdicChar(73);		
+			char datasetOrganization = directorySector.GetEbcdicChar(73);			
 			CylinderHeadSector endOfData = CylinderHeadSector(directorySector.GetEbcdicString(74, 5));
-			InterchangeFile file = InterchangeFile(fileIdentifier, blockLength, recordAttribute, beginningOfExtent, physicalRecordLength, endOfExtent, fixedLengthRecord, bypassIndicator, datasetSecurity, writeProtect, exchangeTypeIndicator, multiVolumeIndicator, volumeSequence, creationDate, recordLength, offsetToNextRecordSpace, expirationDate, verifyCopyIndicator, datasetOrganization, endOfData);
+			string creatingSystem = directorySector.GetEbcdicString(95, 13);
+			InterchangeFile file = InterchangeFile(fileIdentifier, blockLength, recordAttribute, beginningOfExtent, physicalRecordLength, endOfExtent, fixedLengthRecord, bypassIndicator, datasetSecurity, writeProtect, exchangeTypeIndicator, multiVolumeIndicator, volumeSequence, creationDate, recordLength, offsetToNextRecordSpace, expirationDate, verifyCopyIndicator, datasetOrganization, endOfData, creatingSystem);
 			this->GenerateFiles(file);
 			this->files.push_back(file);
 		}

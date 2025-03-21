@@ -5,17 +5,17 @@
 class CylinderHeadSector
 {
 	private:
-		char cylinder;
-		char head;
-		char sector;
+		unsigned char cylinder;
+		unsigned char head;
+		unsigned char sector;
 	public:
-		CylinderHeadSector(char cylinder = 0, char header = 0, char sector = 0);
+		CylinderHeadSector(unsigned char cylinder = 0, unsigned char header = 0, unsigned char sector = 0);
 		CylinderHeadSector(std::string chs);
-		char GetCylinder();
-		char GetHead();
-		char GetSector();
+		unsigned char GetCylinder();
+		unsigned char GetHead();
+		unsigned char GetSector();
 		bool Compare(CylinderHeadSector chs);
 		bool Equals(CylinderHeadSector chs);
-		void Increment(char sectorsPerTrack, bool doubleSided);
+		void Increment(unsigned char sectorsPerTrack, bool doubleSided);
 		CylinderHeadSector Clone();
 };

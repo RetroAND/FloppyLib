@@ -4,16 +4,10 @@
 #include <filesystem>
 #include "Disk.h"
 #include "ImdFunctions.h"
+#include "Types.h"
 
 using namespace std;
 
-#define UNKNOWN 0
-#define ECMA_58 58
-#define IBM_INTERCHANGE 1
-#define IBM_SYSTEM_32 32
-#define IBM_SYSTEM_34 34
-#define PDP11_RX01 11
-#define PDP11_RX02 12
 
 Disk::Disk(char type)
 {
@@ -80,21 +74,21 @@ void Disk::Identify()
 	Track track0 = this->GetTrack(0, 0);
 	if (track0.GetSectorNumber() == 1 && track0.GetSectorSize() == 4096)
 	{
-		this->type = IBM_SYSTEM_34; // System/34 Executable Disk
+		this->type = Type_IBM_System_34; // System/34 Executable Disk
 		return;
 	}
 	if (track0.GetSectorNumber() == 26 && track0.GetSectorSize() == 128)
 	{
-		Sector volume = track0.GetSectors()[6];
+		Sector volume = this->GetSector(CylinderHeadSector(0, 0, 6));
 		vector<char> sector = volume.GetData();
 		if (this->IsEcmaDisk(sector))
 		{
-			this->type = ECMA_58; //ECMA-58 Interchange Disk
+			this->type = Type_ECMA_58_Interchange; //ECMA-58 Interchange Disk
 			return;
 		}
 		if (this->IsInterchangeDisk(sector))
 		{
-			this->type = IBM_INTERCHANGE;	//IBM Interchange disk
+			this->type = Type_IBM_Interchange;	//IBM Interchange disk
 			return;
 		}
 	}
@@ -134,13 +128,13 @@ string Disk::GetTypeString()
 {
 	switch (this->type)
 	{
-		case UNKNOWN: return "Unknown";
-		case IBM_INTERCHANGE: return "IBM Interchange";
-		case PDP11_RX01: return "DEC PDP-11 RX01";
-		case PDP11_RX02: return "DEC PDP-11 RX02";
-		case IBM_SYSTEM_32: return "IBM System/32";
-		case IBM_SYSTEM_34: return "IBM System/34";
-		case ECMA_58: return "ECMA-58";
+		case Type_Unknown: return "Unknown";
+		case Type_IBM_Interchange: return "IBM Interchange";
+		case Type_DEC_PDP_RT11: return "DEC PDP-11 RT-11";
+		case Type_IBM_System_32: return "IBM System/32";
+		case Type_IBM_System_34: return "IBM System/34";
+		case Type_IBM_System_36: return "IBM System/36";
+		case Type_ECMA_58_Interchange: return "ECMA-58";
 		default: return "Reserved";
 	}
 }

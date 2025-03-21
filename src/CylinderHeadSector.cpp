@@ -3,7 +3,7 @@
 
 using namespace std;
 
-CylinderHeadSector::CylinderHeadSector(char cylinder, char head, char sector)
+CylinderHeadSector::CylinderHeadSector(unsigned char cylinder, unsigned char head, unsigned char sector)
 {
 	this->cylinder = cylinder;
 	this->head = head;
@@ -15,23 +15,22 @@ CylinderHeadSector::CylinderHeadSector(string chs)
 	string cylinder = chs.substr(0, 2);
 	string head = chs.substr(2, 1);
 	string sector = chs.substr(3, 2);
-	cout << "CHS: "+chs << endl;
 	this->cylinder = stoi(cylinder);
 	this->head = stoi(head);
 	this->sector = stoi(sector) - 1;
 }
 
-char CylinderHeadSector::GetCylinder()
+unsigned char CylinderHeadSector::GetCylinder()
 {
 	return this->cylinder;
 }
 
-char CylinderHeadSector::GetHead()
+unsigned char CylinderHeadSector::GetHead()
 {
 	return this->head;
 }
 
-char CylinderHeadSector::GetSector()
+unsigned char CylinderHeadSector::GetSector()
 {
 	return this->sector;
 }
@@ -71,7 +70,7 @@ bool CylinderHeadSector::Equals(CylinderHeadSector chs)
 }
 
 
-void CylinderHeadSector::Increment(char sectorsPerTrack, bool doubleSided)
+void CylinderHeadSector::Increment(unsigned char sectorsPerTrack, bool doubleSided)
 {
 	this->sector++;
 	if (this->sector >= sectorsPerTrack)
