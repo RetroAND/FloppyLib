@@ -92,6 +92,21 @@ void Disk::Identify()
 			return;
 		}
 	}
+	if (track0.GetSectorNumber() == 18)
+	{
+		Sector volume = this->GetSector(CylinderHeadSector(0,0,0));
+		if (volume.GetEbcdicString(0,4) == "VOL1")
+		{
+			if (volume.GetEbcdicString(24,7) == "IBM5550")
+			{
+				this->type = Type_IBM_5550;
+			}
+			else if (volume.GetEbcdicString(24, 7) == "IBM3194")
+			{
+				this->type = Type_IBM_3194;
+			}
+		}
+	}
 }
 
 bool Disk::IsEcmaDisk(vector<char> sector)
@@ -114,12 +129,12 @@ bool Disk::IsInterchangeDisk(vector<char> sector)
 	return true;
 }
 
-char Disk::GetType()
+unsigned int Disk::GetType()
 {
 	return this->type;
 }
 
-void Disk::SetType(char type)
+void Disk::SetType(unsigned int type)
 {
 	this->type = type;
 }
@@ -231,5 +246,62 @@ bool Disk::IsIBMInterchangeDisk()
 		case Type_IBM_System_34_Interchange:
 		case Type_IBM_System_36_Interchange: return true;
 		default: return false;
+	}
+}
+
+void Disk::LoadFromImg(string path, DiskGeometry geometry)
+{
+	string extension = path.substr(path.length() - 4);
+	for (int character = 0; character < extension.length(); character++)
+	{
+		extension[character] = tolower(extension[character]);
+	}
+	if (extension != ".img")
+	{
+		throw exception("ERROR: File cannot be loaded because it is not an img");	//ERROR: file cannot be loaded because it is not an img
+	}
+	filesystem::path p = filesystem::path(path);
+	ifstream::pos_type size;
+	ifstream file(path, ios::in | ios::binary | ios::ate);
+	if (!file.is_open())
+	{
+		throw exception("Error: File cannot be opened");	//ERROR: file cannot be opened
+	}
+	int fileSize = filesystem::file_size(path);
+	size = file.tellg();
+	file.seekg(0, ios::beg);
+	vector<char> rawFile = vector<char>();
+	rawFile.reserve(fileSize);
+	file.unsetf(std::ios::skipws);
+	rawFile.insert(rawFile.begin(),
+		std::istream_iterator<char>(file),
+		std::istream_iterator<char>());
+	file.close();
+	if (fileSize != geometry.GetDiskCapacity())
+	{
+		throw exception("ERROR: disk geometry does not match the dump");
+	}
+	int index = 0;
+	for (int currentTrack = 0; currentTrack < geometry.GetTracks(); currentTrack++)
+	{
+		for (int currentHead = 0; currentHead < geometry.GetHeads(); currentHead++)
+		{
+			Track track = Track(Mode(true, 500), currentTrack, currentHead, geometry.GetSectorsPerTrack(), geometry.GetSectorSize());
+			for (int currentSector = 0; currentSector < geometry.GetSectorsPerTrack(); currentSector++)
+			{
+				vector<char> data = vector<char>();
+				for (int currentCell = 0; currentCell < geometry.GetSectorSize(); currentCell++)
+				{
+					data.push_back(rawFile[(currentTrack * geometry.GetHeads() * geometry.GetSectorsPerTrack() * geometry.GetSectorSize())
+						+ (currentHead * geometry.GetSectorsPerTrack() * geometry.GetSectorSize())
+						+ (geometry.GetSectorSize() * currentSector)
+						+ currentCell]);
+				}
+				Sector sector = Sector(CylinderHeadSector(currentTrack, currentHead, currentSector), false, data);//IMG format do not inform of errors!
+				track.GetSectors().push_back(sector);
+			}
+			this->tracks.push_back(track);
+			printf("C: %d H: %d Sectors: %d\n", track.GetCylinder(), track.GetHeader(), track.GetSectors().size());
+		}
 	}
 }

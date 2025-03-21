@@ -28,7 +28,6 @@ void DiskSet::LoadFromD88(string path)
 		throw exception("ERROR: File cannot be loaded because it is not a d88");	//ERROR: file cannot be loaded because it is not a d88
 	}
 	filesystem::path p = filesystem::path(path);
-	DiskSet set = DiskSet(p.stem().string());
 	ifstream::pos_type size;
 	ifstream file(path, ios::in | ios::binary | ios::ate);
 	if (!file.is_open())
@@ -48,6 +47,6 @@ void DiskSet::LoadFromD88(string path)
 	int index = 0;
 	while (index < fileSize)
 	{
-		index += D88ParseDisk(set, rawFile, index);
+		index += D88ParseDisk(*this, rawFile, index);
 	}
 }

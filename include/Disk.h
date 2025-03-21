@@ -4,11 +4,12 @@
 #include <string>
 #include "Track.h"
 #include "DiskStatistics.h"
+#include "DiskGeometry.h";
 
 class Disk
 {
 	private:
-		char type;
+		unsigned int type;
 		std::vector<Track> tracks;
 		bool IsInterchangeDisk(std::vector<char> sector);
 		bool IsEcmaDisk(std::vector<char> sector);
@@ -17,9 +18,10 @@ class Disk
 		bool IsIBMInterchangeDisk();
 		std::vector<Track>& GetTracks();
 		int LoadFromImd(std::string path);
+		void LoadFromImg(std::string path, DiskGeometry geometry);
 		void Identify();
-		char GetType();
-		void SetType(char type);
+		unsigned int GetType();
+		void SetType(unsigned int type);
 		std::string GetTypeString();
 		DiskStatistics GetStatistics();
 		Track GetTrack(char cylinder, char head);

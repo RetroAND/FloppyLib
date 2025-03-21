@@ -11,5 +11,7 @@ enum
 	Type_IBM_System_36_Interchange = 37,
 	Type_ECMA_58_Interchange = 58,
 	Type_NEC_PC_88 = 88,
-	Type_NEC_PC_98 = 98
+	Type_NEC_PC_98 = 98,
+	Type_IBM_3194 = 3194,
+	Type_IBM_5550 = 5550
 };

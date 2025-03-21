@@ -12,5 +12,5 @@ class DiskSet
 	public:
 		DiskSet(std::string name = "");
 		std::vector<Disk>& GetDisks();
-		void LoadFromD88(string path);
+		void LoadFromD88(std::string path);
 };

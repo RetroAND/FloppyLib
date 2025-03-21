@@ -60,6 +60,12 @@ int ImdParseTrack(Disk& disk, vector<char> file, int index)
 	Track track = Track(mode, cylinder, head, sectorNumber, sectorSize);
 	index += 5;
 	//Parse track end
+	printf("Cylinder: %d\n", cylinder);
+	printf("Head: %d\n", head);
+	printf("Sector Number: %d\n", sectorNumber);
+	printf("Sector Size: %d\n", sectorSize);
+	printf("Cylinder Sector Map: %s\n", cylinderSectorMap ? "true" : "false");
+	printf("Head Sector Map: %s\n", headSectorMap ? "true" : "false");
 	//Parse sectors start
 	vector<char> sectorMap = vector<char>();
 	for (int sector = 0; sector < sectorNumber; sector++)

@@ -8,7 +8,7 @@ int main()
 	cout << "FloppyLib library for floppy images" << endl;
 	Disk disk = Disk();
 	//disk.LoadFromImd("C:/Users/RetroAND/Downloads/5322-System-Diagnostic.dsk.imd");
-	disk.LoadFromImd("C:/Users/RetroAND/Downloads/IBM-System-23-Diagnostic_6841645_05-10-82.dsk.imd");
+	disk.LoadFromImd("C:/Users/RetroAND/Downloads/apc8cpm.imd");
 	InterchangeDisk interchange = InterchangeDisk(disk);
 	DiskStatistics stats = disk.GetStatistics();
 

@@ -27,7 +27,8 @@ add_library (FloppyLib  SHARED
 	"src/DiskStatistics.cpp"
 	"src/InterchangeDisk.cpp"
 	"src/DiskSet.cpp"
-	"src/D88Functions.cpp")
+	"src/D88Functions.cpp"
+	"src/DiskGeometry.cpp")
 
 set_target_properties(FloppyLib PROPERTIES
 	VERSION ${PROJECT_VERSION}
@@ -46,8 +47,8 @@ target_include_directories(
 		src
 )
 
-#add_executable(tester src/FloppyLib.cpp)
-#target_link_libraries(tester FloppyLib)
+add_executable(tester src/FloppyLib.cpp)
+target_link_libraries(tester FloppyLib)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET FloppyLib PROPERTY CXX_STANDARD 20)
